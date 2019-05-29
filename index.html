@@ -25,22 +25,52 @@
     <div class="w3-bar w3-black w3-center w3-opacity">
         <h1>Population Simulation</h1>
     </div>
-    <div id="main" class="w3-content">
-        <div class="w3-border-bottom w3-padding-16 w3-center w3-grey">
+    <div id="main" class="w3-panel">
+        <div class="w3-border w3-padding-16 w3-center w3-grey">
             <div class=" w3-show-inline-block w3-padding">
                 <label for="startPopRabbit" class="w3-show">Starting Population for Rabbits</label>
-                <input type="number" id="startPopRabbit" onchange="updateInput()" value = "140">
+                <input type="number" id="startPopRabbit" value="140">
             </div>
             <div class="w3-show-inline-block w3-padding">
                 <label for="startPopCayote" class="w3-show">Starting Population for Cayotes</label>
-                <input type="number" id="startPopCayote" onchange="updateInput()" value="1">
+                <input type="number" id="startPopCayote" value="1">
+            </div>
+            <div class="w3-show-inline-block w3-padding">
+                <label for="timeInc" class="w3-show">Time Increment (in years)</label>
+                <input type="number" id="timeInc" value=".005">
+            </div>
+            <div class="w3-show-inline-block w3-padding">
+                <label for="fps" class="w3-show">Frames per Second</label>
+                <input type="number" id="fps" value="100">
+            </div>
+            <div class="w3-border-bottom"></div>
+            <div class="w3-show-inline-block w3-padding">
+                <label for="a" class="w3-show">a</label>
+                <input type="number" id="a" value="1">
+            </div>
+            <div class="w3-show-inline-block w3-padding">
+                <label for="b" class="w3-show">b</label>
+                <input type="number" id="b" value=".03125">
+            </div>
+            <div class="w3-show-inline-block w3-padding">
+                <label for="c" class="w3-show">c</label>
+                <input type="number" id="c" value=".16">
+            </div>
+            <div class="w3-show-inline-block w3-padding">
+                <label for="d" class="w3-show">d</label>
+                <input type="number" id="d" value="20">
+            </div>
+            <div class="w3-show-inline-block w3-padding">
+                <label for="P" class="w3-show">Carrying Capacity</label>
+                <input type="number" id="P" value="400">
             </div>
         </div>
         <div id="simControls" class="w3-float w3-center">
             <button class="w3-button w3-white w3-margin" onclick="start()">Start</button>
             <button class="w3-button w3-white w3-margin" onclick="reset()">Reset</button>
             <button class="w3-button w3-white w3-margin" onclick="pause()">Pause</button>
-            <input type="checkbox" id="render" value="1" class="w3-check" checked> Do you want to render? <br>
+            <input type="checkbox" id="render" value="1" class="w3-check" checked> Do you want to render?
+            <br>
         </div>
         <canvas id="canvas"></canvas>
         <div id="chartContainer" style="height: 300px; width:100%;"></div>

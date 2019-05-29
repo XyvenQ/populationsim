@@ -1,16 +1,18 @@
 var cayoteImg = new Image(40, 40);
 var rabbitImg = new Image(40, 40);
+var chart;
 cayoteImg.src = "resources/cayote.png";
 rabbitImg.src = "resources/rabbit.png";
 var canvas = document.getElementById('canvas');
 var tick;
 var isRunning;
-var cayotes = 15;
-var rabbits = 140;
+var cayotes = 0;
+var rabbits = 0;
 var cpp = [];
 var rpp = [];
 var xVal = 0;
 var dataLength = 1000; 
+var fps = 0;
 
 var a = 1;
 var b = .03125;
@@ -19,11 +21,15 @@ var d = 20;
 var P = 400;
 var timeInc = .005;
 
+newChart();
+
 function start() {
-  if (isRunning)
+  if (isRunning){
+    alert("Simulation is already running. Reset to start a new simulation")
     return null;
+  }
   update();
-  tick = setInterval(update, 0);
+  tick = setInterval(update, 1000/fps);
   isRunning = true;
 }
 
@@ -32,15 +38,15 @@ function reset() {
   isRunning = false;
   canvas.getContext('2d').clearRect(0, 0, canvas.width, canvas.height);
   updateInput();
-  //updateChart();
+  resetChart();
+  window.requestAnimationFrame(draw);
 }
 
 function resetChart(){
-  chart.options.data[0].dataPoints = [];
-  chart.options.data[1].dataPoints = [];
   cpp=[];
   rpp=[];
   xVal = 0;
+  newChart();
   updateChart();
 }
 function pause() {
@@ -57,9 +63,16 @@ function update() {
 }
 
 function updateInput() {
-  cayotes = parseInt(document.getElementById("startPopCayote").value, 10);
-  rabbits = parseInt(document.getElementById("startPopRabbit").value, 10);
-  update();
+  cayotes = parseFloat(document.getElementById("startPopCayote").value, 10);
+  rabbits = parseFloat(document.getElementById("startPopRabbit").value, 10);
+  timeInc = parseFloat(document.getElementById("timeInc").value, 10);
+  fps = parseFloat(document.getElementById("fps").value, 10);
+  a = parseFloat(document.getElementById("a").value, 10);
+  b = parseFloat(document.getElementById("b").value, 10);
+  c = parseFloat(document.getElementById("c").value, 10);
+  d = parseFloat(document.getElementById("d").value, 10);
+  P = parseFloat(document.getElementById("P").value, 10);
+  update(); 
 }
 
 function updatePop() {
@@ -94,55 +107,54 @@ function randomRange(min, max) {
   return Math.random() * (max - min) + min;
 }
 
-var chart = new CanvasJS.Chart("chartContainer", {
-  title: {
-    text: "Population"
-  },
-  axisY: {
-    includeZero: true,
-    name: "Rabbit Pop",
-    minimum: 0
-  },
-  axisY2: {
-    includeZero: true,
-    name: "Cayote Pop",
-    minimum: 0
-  },
-  axisX:{
-    name: "Years"
-  },
-  data: [{
-      type: "spline",
-      dataPoints: rpp
+function newChart(){
+  chart = new CanvasJS.Chart("chartContainer", {
+    title: {
+      text: "Population"
     },
-    {
-      type: "spline",
-      dataPoints: cpp,
-      axisYType: "secondary"
-    }
-  ]
-});
+    axisY: {
+      includeZero: true,
+      title: "Rabbit Pop",
+      minimum: 0
+    },
+    axisY2: {
+      includeZero: true,
+      title: "Cayote Pop",
+      minimum: 0
+    },
+    axisX:{
+      title: "Years"
+    },
+    data: [{
+        type: "spline",
+        dataPoints: rpp,
+        markerType: "none"
+      },
+      {
+        type: "spline",
+        dataPoints: cpp,
+        axisYType: "secondary",
+        markerType: "none"
+      }
+    ]
+  });
+}
 
-function updateChart(count) {
-
-  count = count || 1;
-
-  for (var j = 0; j < count; j++) {
+function updateChart() {
+  for (var j = 0; j < 1; j++) {
     cpp.push({
-      x: xVal,
+      x: xVal*timeInc,
       y: cayotes,
     });
     rpp.push({
-      x: xVal,
+      x: xVal*timeInc,
       y: rabbits,
     });
     xVal++;
   }
-
   if (rpp.length > dataLength) {
     rpp.shift();
     cpp.shift();
   }
-
   chart.render();
 };
