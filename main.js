@@ -115,12 +115,20 @@ function newChart(){
     axisY: {
       includeZero: true,
       title: "Rabbit Pop",
-      minimum: 0
+      minimum: 0,
+      titleFontColor: "#4F81BC",
+      lineColor: "#4F81BC",
+      labelFontColor: "#4F81BC",
+      tickColor: "#4F81BC"
     },
     axisY2: {
       includeZero: true,
       title: "Cayote Pop",
-      minimum: 0
+      minimum: 0,
+      titleFontColor: "#C0504E",
+      lineColor: "#C0504E",
+      labelFontColor: "#C0504E",
+      tickColor: "#C0504E"
     },
     axisX:{
       title: "Years"
