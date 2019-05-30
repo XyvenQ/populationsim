@@ -91,7 +91,7 @@ function updatePop() {
 function draw() {
   var ctx = canvas.getContext('2d');
   ctx.canvas.width = canvas.clientWidth;
-  ctx.canvas.height = canvas.clientWidth / 2;
+  ctx.canvas.height = document.getElementById("settings").clientHeight - document.getElementById("simControls").clientHeight ;
   ctx.clearRect(0, 0, canvas.width, canvas.height);
   ctx.save();
   for (let index = 0; index < Math.floor(cayotes); index++) {
@@ -114,35 +114,26 @@ function newChart(){
     },
     axisY: {
       includeZero: true,
-      title: "Rabbit Pop",
+      title: "Population",
       minimum: 0,
-      titleFontColor: "#4F81BC",
-      lineColor: "#4F81BC",
-      labelFontColor: "#4F81BC",
-      tickColor: "#4F81BC"
-    },
-    axisY2: {
-      includeZero: true,
-      title: "Cayote Pop",
-      minimum: 0,
-      titleFontColor: "#C0504E",
-      lineColor: "#C0504E",
-      labelFontColor: "#C0504E",
-      tickColor: "#C0504E"
     },
     axisX:{
-      title: "Years"
+      title: "Years",
+      interval: 1
     },
     data: [{
         type: "spline",
         dataPoints: rpp,
-        markerType: "none"
+        markerType: "none",
+        showInLegend: true,
+        name: "Rabbits",
       },
       {
         type: "spline",
         dataPoints: cpp,
-        axisYType: "secondary",
-        markerType: "none"
+        markerType: "none",
+        showInLegend: true,
+        name: "Cayotes"
       }
     ]
   });
@@ -166,3 +157,10 @@ function updateChart() {
   }
   chart.render();
 };
+
+function onLoad(){
+  updateInput();
+}
+function onResize(){
+  window.requestAnimationFrame(draw);
+}
