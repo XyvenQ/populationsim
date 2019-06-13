@@ -57,9 +57,8 @@ function pause() {
 function update() {
   updatePop();
   updateChart();
-  if(document.getElementById("render").checked){
+  if(document.getElementById("render").checked)
     window.requestAnimationFrame(draw);
-  }
 }
 
 function updateInput() {
@@ -84,7 +83,7 @@ function updatePop() {
     cayotes += dCayotePop*timeInc;
   if(rabbits<1)
     rabbits=0;
-  
+  else
     rabbits += dRabbitPop*timeInc;
 }
 
@@ -140,23 +139,21 @@ function newChart(){
 }
 
 function updateChart() {
-  for (var j = 0; j < 1; j++) {
-    cpp.push({
-      x: xVal*timeInc,
-      y: cayotes,
-    });
-    rpp.push({
-      x: xVal*timeInc,
-      y: rabbits,
-    });
-    xVal++;
-  }
+  cpp.push({
+    x: xVal*timeInc,
+    y: cayotes,
+  });
+  rpp.push({
+    x: xVal*timeInc,
+    y: rabbits,
+  });
+  xVal++;
   if (rpp.length > dataLength) {
     rpp.shift();
     cpp.shift();
   }
   chart.render();
-};
+}
 
 function onLoad(){
   updateInput();
